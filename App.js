@@ -8,7 +8,7 @@ class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Card style={styles.card}>
+        <Card>
           <CreditCard/>
         </Card>
       </View>
