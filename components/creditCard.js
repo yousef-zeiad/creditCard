@@ -7,7 +7,6 @@ class CreditCard extends Component {
   state = {
     counter: 0,
     counterAnimation: new Animated.Value(1),
- 
     scaleAddBtnXAnimation: new Animated.Value(0),
     scaleAddBtnYAnimation: new Animated.Value(0),
     scaleCtrXAnimation: new Animated.Value(0),
@@ -35,7 +34,8 @@ class CreditCard extends Component {
 
     this.animateCtr();
   };
-
+  
+  //Button animation 
 
   animateBtn() {
     Animated.timing(this.state.scaleAddBtnXAnimation, {
@@ -158,6 +158,7 @@ class CreditCard extends Component {
 export default CreditCard;
 
 const styles = StyleSheet.create({
+  //styling for the box
   box: {
     width: 200,
     height: 20,
@@ -172,12 +173,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 30
   },
- 
+  //styling for the price tag
   price: {
     fontSize: 25,
     color: '#222',
     marginTop: 30,
   },
+  //styling for the add button
   addBtn: {
     height: 55,
     width: 55
@@ -186,14 +188,17 @@ const styles = StyleSheet.create({
     width: 55,
     height: 55
   },
+  //plus button style
   plusBtn: {
     alignSelf: 'flex-end',
     width: 95,
   },
+
   btns: {
     marginTop: -20,
     height: 70
   },
+  // Number style
   Count: {
     fontSize: 30,
     height: 70,
@@ -207,6 +212,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     width: 120,
   },
+  // minus button style
   minusBtn: {
     alignSelf: 'flex-start',
     width: 100,
