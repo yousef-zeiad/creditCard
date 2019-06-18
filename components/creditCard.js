@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Animated, Easing } from 'react-native';
+import { 
+  StyleSheet, 
+  View, 
+  Text, 
+  Animated, 
+  Easing } from 'react-native';
 import FAB from 'react-native-fab'
 
 
@@ -11,9 +16,9 @@ class CreditCard extends Component {
     scaleAddBtnYAnimation: new Animated.Value(0),
     scaleCtrXAnimation: new Animated.Value(0),
     scaleCtrYAnimation: new Animated.Value(0),
+    rotateAnimation: new Animated.Value(0),
   };
 
- 
   handleMinusClick() {
     if (this.state.counter > 0) {
       this.setState({
@@ -23,65 +28,69 @@ class CreditCard extends Component {
     }
   };
 
- handlePlusClick() {
-  this.setState({
-    counter: this.state.counter + 1
-  });
-
-    if (this.state.counter == 0) {
-      this.animateBtn();
-    }
-
-    this.animateCtr();
-  };
+  handlePlusClick() {
+    this.setState({
+      counter: this.state.counter + 1
+    });
   
+      if (this.state.counter == 0) {
+        this.animateBtn();
+      }
+      this.animateCtr();
+    };
+
   //Button animation 
 
   animateBtn() {
     Animated.timing(this.state.scaleAddBtnXAnimation, {
       toValue: 1,
-      duration: 200,
+      duration: 300,
       easing: Easing.quad
     }).start();
     Animated.timing(this.state.scaleAddBtnYAnimation, {
       toValue: 1,
-      duration: 200,
+      duration: 300,
       easing: Easing.quad
     }).start();
     Animated.timing(this.state.scaleCtrXAnimation, {
       toValue: 1,
-      duration: 200,
+      duration: 300,
       easing: Easing.quad
     }).start();
     Animated.timing(this.state.scaleCtrYAnimation, {
       toValue: 1,
-      duration: 200,
+      duration: 300,
+      easing: Easing.quad
+    }).start();
+    Animated.timing(this.state.rotateAnimation, {
+      toValue: 1,
+      duration: 300,
       easing: Easing.quad
     }).start();
   }
 
   animateCtr() {
     Animated.spring(this.state.counterAnimation, {
-      toValue: 1,
-      speed: 0.5,
+      toValue: 0.8,
+      speed: 0.1,
     }).start();
     setTimeout(() => {
       Animated.spring(this.state.counterAnimation, {
         toValue: 1,
         speed: 0.1,
       }).start();
-    }, 20);
+    }, 50);
   }
 
   render() {
    
     const scaleAddBtnXAnimation = this.state.scaleAddBtnXAnimation.interpolate({
       inputRange: [0, 1],
-      outputRange: [1, 1]
+      outputRange: [1, 0.8]
     });
     const scaleAddBtnYAnimation = this.state.scaleAddBtnYAnimation.interpolate({
       inputRange: [0, 1],
-      outputRange: [1, 1]
+      outputRange: [1, 0.8]
     });
     const scaleCtrXAnimation = this.state.scaleAddBtnYAnimation.interpolate({
       inputRange: [0, 1],
@@ -100,6 +109,11 @@ class CreditCard extends Component {
       outputRange: [0, 0.8]
     });
     const counter = this.state.counter;
+    const rotateAnimation = this.state.rotateAnimation.interpolate({
+      inputRange: [0, 1],
+      outputRange: ["0deg", "90deg"]
+    });
+    const counterAnimation = this.state.counterAnimation;
 
     return (
       <View>
@@ -120,7 +134,10 @@ class CreditCard extends Component {
                 ...styles.st
               }}>
                 <Animated.Text style={{
-                  ...styles.Count
+                  ...styles.Count,
+                  transform: [
+                    { scale: counterAnimation }
+                  ]
                 }}>{counter}
                 </Animated.Text>
               </View>
@@ -134,19 +151,20 @@ class CreditCard extends Component {
             }}>
               <FAB buttonColor="#FFF" iconTextColor="#000"
                 onClickAction={this.handleMinusClick.bind(this)} visible={true}
-                snackOffset={-40} style={styles.mnsBtn} iconTextComponent={<Text>-</Text>}
+                snackOffset={-50} style={styles.mnsBtn} iconTextComponent={<Text>-</Text>}
               />
             </Animated.View>
             <Animated.View style={{
               ...styles.plusBtn,
               transform: [
               { scaleX: scaleAddBtnXAnimation },
-              { scaleY: scaleAddBtnYAnimation }
+              { scaleY: scaleAddBtnYAnimation },
+              { rotate: rotateAnimation },
               ],
             }}>
               <FAB buttonColor="#66CCCC" iconTextColor="#fff"
                 onClickAction={this.handlePlusClick.bind(this)} visible={true}
-                snackOffset={-40} style={styles.addBtn}
+                snackOffset={-50} style={styles.addBtn}
               />
             </Animated.View>
           </View>
@@ -219,5 +237,12 @@ const styles = StyleSheet.create({
     marginLeft: 140,
     marginTop: -20
   },
+  st:{
+    borderRadius: 35,
+    height: 70,
+    width: 70,
+    overflow: "hidden",
+    backgroundColor: '#eee',
+  }
  
 });
